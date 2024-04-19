@@ -11,6 +11,15 @@ const App = () => {
         return setUsers(users.filter(user => user.id !== userId));
     }
 
+    const handleUserUpdate = (updatedUser) => {
+        const updatedUsers = users.map(user => {
+            if(user.id === updatedUser.id){ return updatedUser }
+            return user;
+        });
+
+        return setUsers(updatedUsers);
+    }
+
     return (
         <>
             <Navigation setShowAddUser={() => setShowAddUser(true)} />
@@ -21,7 +30,11 @@ const App = () => {
                 close={() => setShowAddUser(false)}
             />
 
-            <Users users={users} handleRemoveUser={handleRemoveUser} />
+            <Users 
+                users={users} 
+                handleRemoveUser={handleRemoveUser}
+                handleUserUpdate={handleUserUpdate}
+            />
         </>
     )
 }

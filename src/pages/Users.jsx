@@ -2,12 +2,40 @@
 
 import { useState } from "react"
 import Modal from "../components/Modal"
+import EditUser from "./EditUser";
 
-const Users = ({ users, handleRemoveUser }) => {
+const Users = ({ users, handleRemoveUser, handleUserUpdate }) => {
     const [deleteInfo, setDeleteInfo] = useState({
         show: false,
         userId: ""
     });
+    const [editUserInfo, setEditUserInfo] = useState({
+        show: false,
+        user: {
+            id: "",
+            name: "",
+            age: "",
+            country: "",
+            city: ""
+        }
+    });
+
+    const handleEdit = (user) => {
+        setEditUserInfo({...editUserInfo, show: true, user});
+    }
+
+    const handleCloseEdit = () => {
+        setEditUserInfo({
+            ...editUserInfo, show: false,
+            user: {
+                id: "",
+                name: "",
+                age: "",
+                country: "",
+                city: ""
+            }
+        })
+    }
 
     const handleDelete = (userId) => {
         return setDeleteInfo({...deleteInfo, show: true, userId});
@@ -48,7 +76,7 @@ const Users = ({ users, handleRemoveUser }) => {
                                         <td className="border p-1">{user.country}</td>
                                         <td className="border p-1">{user.city}</td>
                                         <td className="border p-1 flex justify-center items-center gap-3">
-                                            <span className="border border-blue-500 hover:bg-blue-500 hover:text-white transition-all py-1 px-3 rounded text-xs  cursor-pointer">Edit</span>
+                                            <span onClick={() => handleEdit(user)} className="border border-blue-500 hover:bg-blue-500 hover:text-white transition-all py-1 px-3 rounded text-xs  cursor-pointer">Edit</span>
                                             <span onClick={() => handleDelete(user.id)} className="border border-red-500 hover:bg-red-500 hover:text-white transition-all py-1 px-3 rounded text-xs  cursor-pointer">Delete</span>
                                         </td>
                                     </tr>
@@ -69,6 +97,25 @@ const Users = ({ users, handleRemoveUser }) => {
             handleProceed={handleProceed}
             handleCancel={() => setDeleteInfo({...deleteInfo, show: false, userId: ""})}
         />
+
+        {/* Edit User */}
+        {/* <EditUser
+            show={editUserInfo.show}
+            user={editUserInfo.user}
+            updateUser={(updatedUser) => console.log("Updated user: ", updatedUser)}
+            close={handleCloseEdit}
+        /> */}
+
+        {
+            editUserInfo.show ? (
+                <EditUser 
+                    show={editUserInfo.show}
+                    user={editUserInfo.user}
+                    updateUser={(updatedUser) => handleUserUpdate(updatedUser)}
+                    close={handleCloseEdit}
+                />
+            ) : null
+        }
 
         <div className="container">
             <h1 className="font-bold text-primary text-sm text-center mt-6 mb-2">USERS</h1>
