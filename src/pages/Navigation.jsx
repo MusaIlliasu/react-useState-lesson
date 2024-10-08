@@ -6,7 +6,7 @@ const Navigation = ({ setShowAddUser }) => {
         <div className="container">
             <div className="flex justify-between items-center gap-4">
                 <div>
-                    <span className="inline-block w-[35px] h-[35px] rounded-full bg-primary"></span>
+                    <span className="w-[35px] h-[35px] rounded-full bg-primary text-white flex justify-center items-center text-lg">I</span>
                 </div>
 
                 <div>

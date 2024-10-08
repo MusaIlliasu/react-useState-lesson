@@ -39,13 +39,17 @@ const App = () => {
     }
 
     const handleUserUpdate = (updatedUser) => {
-        
-        const updatedUsers = users.map(user => {
-            if(user.id === updatedUser.id){ return updatedUser }
-            return user;
-        });
-
-        return setUsers(updatedUsers);
+        const items = localStorage.getItem("items");
+        if(items){
+            const parsedUsers = JSON.parse(items);
+            const updatedUsers = parsedUsers.map(user => {
+                if(user.id === updatedUser.id){ return updatedUser }
+                return user;
+            });
+            localStorage.setItem("items", JSON.stringify(updatedUsers));
+            setUsers(updatedUsers);
+            return;
+        }
     }
 
     return (
